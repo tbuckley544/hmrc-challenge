@@ -1,9 +1,9 @@
 package hmrc
 
 object Checkout {
-  def apply(): Checkout = new Checkout()
+  def apply(offers: Vector[Vector[Item] => Vector[Item]]): Checkout = new Checkout(offers)
 }
 
-class Checkout {
-  def calculatePrice(items: Vector[Item]): BigDecimal = items.map(_.price).sum
+class Checkout(offers: Vector[Vector[Item] => Vector[Item]]) {
+  def calculatePrice(items: Vector[Item]): BigDecimal = offers.foldLeft(items)((i, offer) => offer(i)).map(_.price).sum
 }

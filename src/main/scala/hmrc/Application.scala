@@ -5,6 +5,7 @@ import akka.event.LoggingAdapter
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import org.json4s.{DefaultFormats, Formats, Serialization, native}
+import Offers._
 
 import scala.concurrent.ExecutionContext
 
@@ -17,7 +18,7 @@ object Application extends App {
   implicit val formats: Formats = DefaultFormats + Items
   implicit val ec: ExecutionContext = ExecutionContext.global
 
-  val checkout = Checkout()
+  val checkout = Checkout(Vector(buyOneGetOneFreeApples, threeForTwoOranges))
 
   val route = HttpRoute(checkout)
 
